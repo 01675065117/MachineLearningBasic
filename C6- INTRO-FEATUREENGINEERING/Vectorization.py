@@ -19,7 +19,7 @@ def image_to_vector(image: numpy.ndarray) -> numpy.ndarray:
     length, height, depth = image.shape
     return image.reshape((length * height * depth, 1))
 
-img = cv2.imread('../Media/image.JPG')
+img = cv2.imread('D:\Tai-Lieu-Hoc\TNCKH\Graduation_Thesis\MLB\MachineLearningBasic\Media\image.JPG')
 
 actual = image_to_vector(img)
  
