@@ -63,7 +63,7 @@ def clean_text(df):
 
 def split_data(all_reviews,Data):
     TV =TfidfVectorizer(min_df=3)#Fix CV -> TF
-    x = TV.fit_transform(all_reviews).toarray()#fit các vector với all_reviews
+    x = TV.fit_transform(all_reviews).toarray()#fit vectors with all_reviews
     y = Data[["Review class"]].values
     X_train, X_test, Y_train, Y_test = train_test_split(x, y, test_size = 0.2, random_state = 0)
     return X_train, X_test, Y_train, Y_test

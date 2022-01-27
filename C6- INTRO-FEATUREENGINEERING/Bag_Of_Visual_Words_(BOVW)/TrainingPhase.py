@@ -69,6 +69,25 @@ for i in range(len(image_paths)):
 nbr_occurences = np.sum((im_features > 0) * 1, axis = 0)
 idf = np.array(np.log((1.0*len(image_paths)+1) / (1.0*nbr_occurences)), "float32")
 
+'''
+- Scaling the words
+- Strandarize features by removing the mean and scaling to unit variance
+- In a way normalization
+'''
+from sklearn.preprocessing import StandardScaler
+stdSlr = StandardScaler().fit(im_features)
+im_features = stdSlr.transform(im_features)
+
+# Train an algorithm to discriminate vectors corresponding to positive and negative training.
+# Train the Linear SVM
+from sklearn.svm import LinearSVC
+clf = LinearSVC(max_iter=50000) # Default: 100
+clf.fit(im_features, np.array(image_classes))
+
+# Save the SVM
+# Joblib dumps Python object into one file
+from sklearn.externals import Joblib
+Joblib.dump((clf, training_names,stdSlr, k , voc),"bovw.pkl", compress = 3)
 
 
 
