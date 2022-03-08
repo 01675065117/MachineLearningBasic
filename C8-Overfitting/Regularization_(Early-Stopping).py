@@ -27,7 +27,6 @@ def split(X, y, n_train = 30):
     return X_train, X_test, y_train, y_test
 
 def create_model(X_train, X_test, y_train, y_test):
-    
     #define model
     model = Sequential()
     model.add(Dense(500, input_dim = 2, activation = 'relu'))
@@ -35,7 +34,7 @@ def create_model(X_train, X_test, y_train, y_test):
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
     
     #early stopping
-    es = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=200)
+    es = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=50)
     #mc = ModelCheckpoint('best_model.h5', monitor='val_accuracy', mode='max', verbose=1, save_best_only=True)
     
     #fit model
@@ -43,15 +42,22 @@ def create_model(X_train, X_test, y_train, y_test):
     
     #saved_model = load_model('best_model.h5')
     
-    _, train_acc = model.evaluate(X_train, y_train, verbose=0)
-    _, test_acc = model.evaluate(X_test, y_test, verbose=0)
-    print('Train: %.3f, Test: %.3f' % (train_acc, test_acc))
+    train_loss, train_acc = model.evaluate(X_train, y_train, verbose=0)
+    test_loss, test_acc = model.evaluate(X_test, y_test, verbose=0)
+    print('Train acc: %.3f, Test acc: %.3f' % (train_acc, test_acc))
+    print('Train loss: %.3f, Test Loss: %.3f' % (train_loss, test_loss))
     return history, model
 
 def plot(history):
     # plot training history
+    pyplot.title('Loss')
     pyplot.plot(history.history['loss'], label='train')
     pyplot.plot(history.history['val_loss'], label='test')
+    pyplot.legend()
+    pyplot.show()
+    pyplot.title('Accuracy')
+    pyplot.plot(history.history['accuracy'], label='train')
+    pyplot.plot(history.history['val_accuracy'], label='test')
     pyplot.legend()
     pyplot.show()
 
