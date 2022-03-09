@@ -19,3 +19,14 @@ print('labels: ', np.unique(iris_y))
 
 X_train, X_test, y_train, y_test = train_test_split(iris_X,iris_y, test_size=130)
 print('Train size: ', X_train.shape[0], ', Test size: ',X_test.shape[0])
+
+model = neighbors.KNeighborsClassifier(n_neighbors = 7, p =2, weights = 'distance') # p = 2 is the l2 norm, p=1 is the l1 norm
+model.fit(X_train, y_train)
+
+y_pred = model.predict(X_test)
+print("Accuracy of 1NN: %.2f %%" %(100*accuracy_score(y_test, y_pred)))
+
+
+
+
+
